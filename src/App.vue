@@ -77,6 +77,7 @@ const init = () => {
 const confirm = () => {
   proxy.$http.post("/api/spectrum/test" ,
   {id: id.value, lambdaA: lambdaA.value, lambdaB: lambdaB.value, ac: ac.value, alpha: alpha.value, start: start.value, end: end.value})
+  // proxy.$http.get("/api/spectrum/test/" + id.value)
   .then(res => {
     let data = res.data;
     echarts.init(document.getElementById('chart')).dispose();
