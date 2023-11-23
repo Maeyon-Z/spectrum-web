@@ -57,12 +57,12 @@ let { proxy } = getCurrentInstance();
 
 const data = ref([])
 const id = ref()
-const alpha = ref(0.2)
-const lambdaA = ref(2.0)
+const alpha = ref(0.05)
+const lambdaA = ref(6.60)
 const lambdaB = ref(1000.0)
 const ac = ref(-0.1)
-const start = ref(300)
-const end = ref(1000)
+const start = ref(30)
+const end = ref(2048)
 
 onMounted(() => {
   init()
@@ -77,7 +77,7 @@ const init = () => {
 const confirm = () => {
   proxy.$http.post("/api/spectrum/test" ,
   {id: id.value, lambdaA: lambdaA.value, lambdaB: lambdaB.value, ac: ac.value, alpha: alpha.value, start: start.value, end: end.value})
-  // proxy.$http.get("/api/spectrum/test/" + id.value)
+  // proxy.$http.get("/api/spectrum/testDb/" + id.value)
   .then(res => {
     let data = res.data;
     echarts.init(document.getElementById('chart')).dispose();
@@ -90,7 +90,7 @@ const confirm = () => {
         trigger: 'axis'
       },
       legend: {
-        data: ['原始数据', '初步平滑', '背景荧光', '校准基线', '二次平滑']
+        data: ['原始数据', '初步平滑', '背景荧光', '校准基线', '二次平滑', '入库数据']
       },
       grid: {
         left: '3%',
@@ -136,6 +136,11 @@ const confirm = () => {
           name: '二次平滑',
           type: 'line',
           data: data.sm2
+        },
+        {
+          name: '入库数据',
+          type: 'line',
+          data: data.dbData
         }
       ]
     });
